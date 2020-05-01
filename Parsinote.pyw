@@ -222,12 +222,12 @@ class AboutWindow(QMainWindow):
 
     # If GitHub button pressed
     def goHub(self):
-        webbrowser.open("https://gitlab.com/mskf1383/parsinote_lite")
+        webbrowser.open("https://github.com/mskf1383/parsinote_lite")
 
 
     # If GitLab button pressed
     def goLab(self):
-        webbrowser.open("https://github.com/mskf1383/parsinote_lite")
+        webbrowser.open("https://gitlab.com/mskf1383/parsinote_lite")
 
 
 # Run the app
