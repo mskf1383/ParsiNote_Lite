@@ -1,0 +1,137 @@
+QMainWindow {
+    background: #eee;
+}
+
+QMenuBar {
+    padding: 0px;
+    background: #fff;
+    font-family: vazir;
+    font-size: 16px;
+}
+
+QMenuBar::item {
+    padding: 12px;
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+QMenuBar::item:selected {
+    background: #eee;
+}
+
+QMenuBar::item:pressed {
+    background: #59f;
+}
+
+QMenu {
+    border: 3px solid #59f;
+    background: #fff;
+}
+
+QMenu::item {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #fff;
+    font-family: vazir;
+}
+            
+QMenu::icon {
+    margin-left: 20px;
+}
+
+QMenu::item:selected {
+    background: #eee;
+    color: #000;
+}
+
+QMenu::item:pressed {
+    background: #59f;
+    color: #000;
+}
+
+QLabel {
+    padding: 0px;
+    color: #000;
+    font-family: vazir;
+    font-size: 18px;
+}
+
+QPushButton {
+    padding: 5px;
+    color: #000;
+    background: #fff;
+    font-family: vazir;
+    font-size: 18px;
+    border: 0px;
+}
+
+QPushButton:hover {
+    background: #eee;
+}
+
+QPushButton:pressed {
+    background: #59f;
+}
+
+QToolBar {
+    background: #eee;
+    padding: 0px;
+    border: 0px;
+}
+
+QToolBar QToolButton:hover {
+    background: #fff;
+    border: 0px;
+}
+
+QToolBar QToolButton:pressed {
+    background: #59f;
+    border: 0px;
+}
+
+QTextEdit {
+    background: #fff;
+    border: 0px;
+    font-family: vazir;
+    font-size: 18px;
+    color: #000;
+    padding: 10px;
+}
+
+QToolTip {
+    background: #fff;
+    border: 1px solid #eee;
+    font-family: vazir;
+    font-size: 16px;
+    color: #000;
+}
+
+QTabBar::tab {
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: #fff;
+    border: 0px;
+    font-family: vazir;
+    margin-top: 3px;
+}
+
+QTabBar::tab:hover {
+    background: #eee;
+}
+
+QTabBar::tab:selected {
+    background: #59f;
+}
+
+QTabWidget::pane {
+    border-top: 3px solid #59f;
+    margin: 0px;
+    padding: -11px;
+}
+
+QTabWidget::tab-bar {
+    margin: 0px;
+}
