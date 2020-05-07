@@ -1,10 +1,19 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QAction, QToolBar, QPushButton, QFontDialog, QMessageBox, QLabel
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QAction, QToolBar, QPushButton, QFontDialog, QMessageBox, QLabel, QStatusBar
 from AutoCorrection import TextBox
-from PyQt5.QtGui import QIcon, QTextCursor
+from PyQt5.QtGui import QIcon, QTextCursor, QFontDatabase, QFont
 from PyQt5.QtCore import Qt, pyqtSlot, QSize
 from sys import argv
 import webbrowser
 import os
+
+
+try:
+    from PyQt5.QtWinExtras import QtWin
+    myappid = 'INORA.ParsiNote.Lite.Beta1'
+    QtWin.setCurrentProcessExplicitAppUserModelID(myappid)
+
+except ImportError:
+    pass
 
 
 # The MainWindow class
@@ -14,7 +23,7 @@ class MainWindow(QMainWindow):
         self.GUI()
 
 
-    # The MAinWindow menu
+    # The MainWindow menu
     def pn_menu(self):
 
         # Create menu bar
@@ -125,6 +134,16 @@ class MainWindow(QMainWindow):
         self.text.AutoCorrect()
         self.setCentralWidget(self.text)
 
+        # Show status bar
+        self.statusbar = QStatusBar()
+        self.setStatusBar(self.statusbar)
+        self.statusbar.setSizeGripEnabled(False)
+        self.statuslabel = QLabel("{line} خط | {char} کارکتر".format(char = str(len(self.text.toPlainText())), line = str(self.text.document().blockCount())), self)
+        self.statuslabel.setStyleSheet("margin-right: 10px;")
+        self.statusbar.setLayoutDirection(Qt.LeftToRight)
+        self.statusbar.addPermanentWidget(self.statuslabel)
+        self.text.textChanged.connect(self.statuschange)
+
 
     @pyqtSlot()
 
@@ -154,7 +173,7 @@ class MainWindow(QMainWindow):
 
     # If exit button pressed
     def exit_BTN(self):
-        exit()
+        app.exit()
 
 
     # If font button pressed
@@ -175,13 +194,22 @@ class MainWindow(QMainWindow):
     # If bug button pressed
     def bug_BTN(self):
         webbrowser.open("https://github.com/mskf1383/parsinote_lite")
-        webbrowser.open("https://gitlab.com/mskf1383/parsinote_lite")
 
 
     # If about button pressed
     def about_BTN(self):
-        
         aboutwindow.show()
+
+    # Status change function
+    def statuschange(self):
+        txt = self.text.toPlainText().split()
+        count = 0
+
+        for i in txt:
+            if i == "\n":
+                count += 1
+
+        self.statuslabel.setText("{line} خط | {char} کارکتر".format(char = str(len(self.text.toPlainText())), line = str(self.text.document().blockCount())))        
 
 
 # The AboutWindow class
@@ -198,20 +226,14 @@ class AboutWindow(QMainWindow):
         self.setFixedSize(320, 240)
 
         # Info Label
-        self.label = QLabel("نام برنامه: پارسی نوت لایت\nنسخه: بتا1\nسازنده: محمدصالح کامیاب\nنوشته شده با: پایتون و PyQt5\nگرافیک از:\nhttps://www.flaticon.com\n", self)
+        self.label = QLabel("نام برنامه: پارسی نوت لایت\nنسخه: بتا2\nسازنده: محمدصالح کامیاب\nنوشته شده با: پایتون و PyQt5\nگرافیک از:\nhttps://www.flaticon.com\n", self)
         self.label.setAlignment(Qt.AlignCenter)
 
         # GitHub button
         self.github = QPushButton("سورس در گیت‌هاب", self)
-        self.github.resize(160, 40)
+        self.github.resize(320, 40)
         self.github.move(0, 200)
         self.github.clicked.connect(self.goHub)
-
-        # GitLab button
-        self.gitlab = QPushButton("سورس در گیت‌لب", self)
-        self.gitlab.resize(160, 40)
-        self.gitlab.move(160, 200)
-        self.gitlab.clicked.connect(self.goLab)
 
         self.setCentralWidget(self.label)
 
@@ -225,11 +247,6 @@ class AboutWindow(QMainWindow):
         webbrowser.open("https://github.com/mskf1383/parsinote_lite")
 
 
-    # If GitLab button pressed
-    def goLab(self):
-        webbrowser.open("https://gitlab.com/mskf1383/parsinote_lite")
-
-
 # Run the app
 if __name__ == "__main__":
     app = QApplication(argv)
@@ -237,9 +254,13 @@ if __name__ == "__main__":
     with open("data\\style.css") as f:
         app.setStyleSheet(f.read())
 
+    fontdata = QFontDatabase()
+    vazirfont = fontdata.addApplicationFont("data\\Vazir.ttf")
+    app.setFont(QFont("Vazir"))
+
     window = MainWindow()
     window.show()
 
     aboutwindow = AboutWindow()
 
-    app.exec_()
+    app.exec()
